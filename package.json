@@ -1,13 +1,17 @@
 {
   "name": "@algobright/solana-connector",
   "version": "0.1.0",
-  "description": "AlgoBright Solana Wallet Connector",
-  "license": "Apache-2.0",
-  "author": "AlgoBright Tech Private Limited",
   "repository": {
     "type": "git",
     "url": "https://github.com/algobright/solana-connector.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "description": "AlgoBright Solana Wallet Connector",
+  "license": "Apache-2.0",
+  "author": "AlgoBright Tech Private Limited",
   "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -37,10 +41,6 @@
     "dev": "tsup --watch --clean --onSuccess \"yalc push\"",
     "local:refresh": "npm run build && yalc publish --push",
     "prepublishOnly": "npm run build"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",

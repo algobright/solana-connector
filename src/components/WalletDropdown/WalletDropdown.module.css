@@ -9,6 +9,7 @@
   --muted-fg: #71717a;
 
   --network-bg: #fafafa;
+  --network-fg: #52525b;
   --network-border: #e5e5e5;
 
   --balance-bg: #f4f4f5;
@@ -19,7 +20,8 @@
   --muted: #f5f5f5;
   --muted-fg: #737373;
 
-  --network-bg: #fafafa;
+  --network-bg: #18181b;
+  --network-fg: #a1a1aa;
   --network-border: #e5e5e5;
 
   --balance-bg: #18181b;
@@ -157,10 +159,10 @@
 
 .networkOptions {
   border-radius: 0.75rem;
-  background-color: #fafafa80;
   overflow: hidden;
   border: 1px solid var(--network-border);
   background-color: var(--network-bg);
+  color: var(--network-fg);
 }
 .networkButton {
   display: flex;
