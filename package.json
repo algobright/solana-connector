@@ -1,0 +1,71 @@
+{
+  "name": "@algobright/solana-connector",
+  "version": "0.1.0",
+  "description": "AlgoBright Solana Wallet Connector",
+  "license": "Apache-2.0",
+  "author": "AlgoBright Tech Private Limited",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/algobright/solana-connector.git"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./ConnectButton": {
+      "types": "./dist/ConnectButton.d.ts",
+      "import": "./dist/ConnectButton.mjs",
+      "require": "./dist/ConnectButton.js"
+    },
+    "./WalletModal": {
+      "types": "./dist/WalletModal.d.ts",
+      "import": "./dist/WalletModal.mjs",
+      "require": "./dist/WalletModal.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup --clean",
+    "dev": "tsup --watch --clean --onSuccess \"yalc push\"",
+    "local:refresh": "npm run build && yalc publish --push",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.1.0",
+    "@solana/connector": "^0.2.3",
+    "@solana/kit": "^5.4.0",
+    "@solana/web3.js": "^1.98.4",
+    "@types/qrcode": "^1.5.6",
+    "clsx": "^2.1.1",
+    "esbuild-css-modules-plugin": "^3.1.5",
+    "lucide-react": "^0.563.0",
+    "motion": "^12.29.0",
+    "qrcode": "^1.5.4",
+    "react-icons": "^5.5.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "postcss": "^8.5.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}

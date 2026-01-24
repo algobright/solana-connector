@@ -1,0 +1,42 @@
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 3rem;
+  max-height: 100%;
+
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 50%;
+
+  --fallback-avatar-bg: #f4f4f5;
+  --fallback-avatar-fg: #71717a;
+}
+
+.avatar[data-theme="dark"] {
+  --fallback-avatar-bg: #27272a;
+  --fallback-avatar-fg: #a1a1aa;
+}
+
+.avatar img {
+  border-radius: 50%;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.fallback {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--fallback-avatar-bg);
+  color: var(--fallback-avatar-fg);
+}
+.fallback svg {
+  width: 50%;
+  height: 50%;
+}

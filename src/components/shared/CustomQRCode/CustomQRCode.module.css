@@ -1,0 +1,176 @@
+/* --- Main Container --- */
+.container {
+  position: relative;
+  display: block;
+}
+
+/* --- Viewfinder Frame --- */
+.viewfinder {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* --- Content Area (The box containing the QR) --- */
+.contentArea {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Borders & Shape */
+  border: 3px solid rgba(0, 0, 0, 0.05);
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+/* Error State for Content Area */
+.contentArea[data-error="true"] {
+  border-color: rgba(239, 68, 68, 0.3); /* red-500/30 */
+}
+
+/* --- Glow Background --- */
+.glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  filter: blur(15px);
+  pointer-events: none;
+  transform: scale(0.9);
+  background: linear-gradient(to bottom right, #f3e8ff, #bfdbfe);
+}
+
+.glow[data-error="true"] {
+  background: linear-gradient(to bottom right, #ef4444, #dc2626);
+}
+
+/* --- Shine Animation --- */
+.shine {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+
+  /* The Shine Gradient */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  /* The Animation */
+  animation: qrScanSlide 2s ease-in-out infinite;
+}
+
+@keyframes qrScanSlide {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* --- QR Wrapper --- */
+.qrWrapper {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1);
+}
+
+/* --- Logo in Center --- */
+.logoWrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border-radius: 17px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+}
+
+/* --- SVG Utility --- */
+.svgFull {
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================================
+   Placeholder Component Styles
+   ========================================= */
+
+.placeholderContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The faint dots in the background */
+.placeholderPattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  border-radius: 14px;
+  background-size: 1.888% 1.888%;
+  background-repeat: repeat;
+}
+
+/* The 3 corner squares */
+.cornerSquare {
+  position: absolute;
+  border-radius: 12px;
+  opacity: 0.1;
+  width: 13.25%;
+  height: 13.25%;
+}
+
+/* The center blank area */
+.centerArea {
+  position: relative;
+  border-radius: 20px;
+  z-index: 10;
+  width: 28%;
+  height: 28%;
+}
+
+/* Loading Spinner Wrapper */
+.loaderWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.spinner {
+  width: 2rem; /* w-8 */
+  height: 2rem; /* h-8 */
+  border-width: 2px;
+  border-style: solid;
+  border-color: currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  margin-bottom: 0.75rem; /* mb-3 */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-size: 0.75rem;
+}

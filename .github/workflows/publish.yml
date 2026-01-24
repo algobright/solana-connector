@@ -1,0 +1,34 @@
+name: Publish to npm
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Required for Trusted Publishing and Provenance in 2026
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x' # Node 24 includes npm v11, which is required for the new handshake
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Install Dependencies
+        # 'npm i' is safer than 'npm ci' here because it will automatically 
+        # resolve the Linux binaries (esbuild/rollup) that your Windows lockfile is missing.
+        run: npm install 
+        
+      - name: Build
+        run: npm run build
+        
+      - name: Publish to npm
+        # --provenance links this build to this exact GitHub commit for security
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

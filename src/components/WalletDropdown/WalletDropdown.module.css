@@ -1,0 +1,220 @@
+.WalletDropdown {
+  display: flex;
+  flex-direction: column;
+  width: 22.5rem;
+  padding: 1rem;
+  gap: 1rem;
+
+  --muted: #f5f5f5;
+  --muted-fg: #71717a;
+
+  --network-bg: #fafafa;
+  --network-border: #e5e5e5;
+
+  --balance-bg: #f4f4f5;
+  --balance-fg: #52525b;
+  --balance-loading-bg: #e4e4e7;
+}
+.WalletDropdown[data-theme="dark"] {
+  --muted: #f5f5f5;
+  --muted-fg: #737373;
+
+  --network-bg: #fafafa;
+  --network-border: #e5e5e5;
+
+  --balance-bg: #18181b;
+  --balance-fg: #a1a1aa;
+  --balance-loading-bg: #27272a;
+}
+
+/* address, avatar, copy and network button */
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.addressAndAvatar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.address {
+  display: flex;
+  flex-direction: column;
+}
+.shortAddress {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.walletName {
+  font-size: 0.875rem;
+  color: var(--muted-fg);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.actions svg {
+  margin: auto;
+  width: 1rem;
+  height: 1rem;
+}
+.actions .checkIcon {
+  color: green;
+}
+.actions > button {
+  position: relative;
+  border-radius: 100%;
+  margin: auto;
+}
+.networkIndicator {
+  position: absolute;
+  bottom: -0.25rem;
+  right: -0.25rem;
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 100%;
+}
+
+/* balance element */
+.balanceSection {
+  padding: 1em;
+  border-radius: 0.75rem;
+  background-color: var(--balance-bg);
+  gap: 0.25rem;
+}
+.balanceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.balanceLabel {
+  font-size: 0.875rem;
+  color: var(--balance-fg);
+}
+.refreshButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: var(--balance-fg);
+}
+.refreshButton:disabled {
+  opacity: 0.5;
+}
+.refreshButton svg {
+  height: 1rem;
+  width: 1rem;
+  color: var(--balance-bg);
+}
+.refreshButton svg[data-loading="true"] {
+  animation: spin 1s linear infinite;
+}
+.balanceValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.balanceLoading {
+  height: 2rem;
+  width: 8rem;
+  background-color: var(--balance-loading-bg);
+  border-radius: 0.5rem;
+  animation: pulse 1.5s infinite;
+}
+
+/* disconnect button */
+.disconnectButton {
+  width: 100%;
+  height: 2.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  gap: 1em;
+}
+.disconnectIcon {
+  height: 1rem;
+  width: 1rem;
+}
+
+/* network switcher */
+.NetworkHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.backButton {
+  border-radius: 50%;
+  opacity: 0.75;
+}
+.NetworkHeader span {
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.networkOptions {
+  border-radius: 0.75rem;
+  background-color: #fafafa80;
+  overflow: hidden;
+  border: 1px solid var(--network-border);
+  background-color: var(--network-bg);
+}
+.networkButton {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.networkButton:hover {
+  filter: brightness(1.1);
+}
+.networkOptions .networkButton:not(:last-child) {
+  border-bottom: 1px solid var(--network-border);
+}
+
+.networkName {
+  display: flex;
+  gap: 1em;
+}
+.networkColor {
+  height: 1em;
+  width: 1em;
+  border-radius: 100%;
+}
+.checkMark {
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--network-border);
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+.checkMark[data-selected="true"] {
+  background-color: black;
+  border-color: black;
+}
+.checkMark svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: white;
+}
+
+/* animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

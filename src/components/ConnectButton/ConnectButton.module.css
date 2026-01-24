@@ -1,0 +1,8 @@
+/* Order of strength: 1 (weakest) -> 3 (strongest) */
+@layer algobright-button-base;
+
+.connectButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

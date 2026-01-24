@@ -1,0 +1,24 @@
+.trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 1rem;
+}
+.trigger[data-panel-open] svg {
+  transform: rotate(180deg);
+}
+
+.content {
+  overflow: hidden;
+  height: var(--collapsible-panel-height);
+  transition: height 0.2s ease-out;
+}
+.content[data-starting-style],
+.content[data-ending-style] {
+  height: 0;
+}
