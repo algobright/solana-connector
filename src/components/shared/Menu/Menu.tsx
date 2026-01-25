@@ -1,8 +1,8 @@
 'use client';
 
-import * as React from 'react';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 import styles from './Menu.module.css';
+import { ComponentPropsWithoutRef, forwardRef } from 'react';
 
 
 const Menu = BaseMenu.Root;
@@ -10,10 +10,10 @@ const MenuPortal = BaseMenu.Portal;
 const MenuGroup = BaseMenu.Group;
 
 // Trigger 
-type MenuTriggerProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Trigger> & {
+type MenuTriggerProps = ComponentPropsWithoutRef<typeof BaseMenu.Trigger> & {
     render: React.ReactElement;
 };
-const MenuTrigger = React.forwardRef<HTMLButtonElement, MenuTriggerProps>(
+const MenuTrigger = forwardRef<HTMLButtonElement, MenuTriggerProps>(
     ({ className, ...props }, ref) => (
         <BaseMenu.Trigger
             ref={ref}
@@ -25,8 +25,8 @@ const MenuTrigger = React.forwardRef<HTMLButtonElement, MenuTriggerProps>(
 MenuTrigger.displayName = 'MenuTrigger';
 
 // Position of the Popup
-type MenuPositionerProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Positioner>;
-const MenuPositioner = React.forwardRef<HTMLDivElement, MenuPositionerProps>(
+type MenuPositionerProps = ComponentPropsWithoutRef<typeof BaseMenu.Positioner>;
+const MenuPositioner = forwardRef<HTMLDivElement, MenuPositionerProps>(
     ({ sideOffset = 8, ...props }, ref) => (
         <BaseMenu.Positioner ref={ref} sideOffset={sideOffset} {...props} />
     )
@@ -34,10 +34,10 @@ const MenuPositioner = React.forwardRef<HTMLDivElement, MenuPositionerProps>(
 MenuPositioner.displayName = 'MenuPositioner';
 
 // Popup
-type MenuPopupProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & {
+type MenuPopupProps = ComponentPropsWithoutRef<typeof BaseMenu.Popup> & {
     theme?: 'light' | 'dark';
 };
-const MenuPopup = React.forwardRef<HTMLDivElement, MenuPopupProps>(
+const MenuPopup = forwardRef<HTMLDivElement, MenuPopupProps>(
     ({ className, theme, ...props }, ref) => (
         <BaseMenu.Popup
             ref={ref}
@@ -50,8 +50,8 @@ const MenuPopup = React.forwardRef<HTMLDivElement, MenuPopupProps>(
 MenuPopup.displayName = 'MenuPopup';
 
 // Item
-type MenuItemProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Item>;
-const MenuItem = React.forwardRef<HTMLDivElement, MenuItemProps>(
+type MenuItemProps = ComponentPropsWithoutRef<typeof BaseMenu.Item>;
+const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     ({ className, ...props }, ref) => (
         <BaseMenu.Item
             ref={ref}
@@ -63,8 +63,8 @@ const MenuItem = React.forwardRef<HTMLDivElement, MenuItemProps>(
 MenuItem.displayName = 'MenuItem';
 
 // Separator
-type MenuSeparatorProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Separator>;
-const MenuSeparator = React.forwardRef<HTMLDivElement, MenuSeparatorProps>(
+type MenuSeparatorProps = ComponentPropsWithoutRef<typeof BaseMenu.Separator>;
+const MenuSeparator = forwardRef<HTMLDivElement, MenuSeparatorProps>(
     ({ className, ...props }, ref) => (
         <BaseMenu.Separator ref={ref} className={`${styles.separator} ${className || ''}`} {...props} />
     )
@@ -72,8 +72,8 @@ const MenuSeparator = React.forwardRef<HTMLDivElement, MenuSeparatorProps>(
 MenuSeparator.displayName = 'MenuSeparator';
 
 // Group Label
-type MenuGroupLabelProps = React.ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel>;
-const MenuGroupLabel = React.forwardRef<HTMLDivElement, MenuGroupLabelProps>(
+type MenuGroupLabelProps = ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel>;
+const MenuGroupLabel = forwardRef<HTMLDivElement, MenuGroupLabelProps>(
     ({ className, ...props }, ref) => (
         <BaseMenu.GroupLabel ref={ref} className={`${styles.groupLabel} ${className || ''}`} {...props} />
     )

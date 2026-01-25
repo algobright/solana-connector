@@ -1,11 +1,11 @@
 'use client';
 
-import * as React from 'react';
 import { Collapsible as BaseCollapsible } from '@base-ui/react/collapsible';
 import styles from './Collapsible.module.css';
+import { forwardRef } from 'react';
 
 const Collapsible = BaseCollapsible.Root;
-const CollapsibleTrigger = React.forwardRef<
+const CollapsibleTrigger = forwardRef<
     HTMLButtonElement,
     React.ComponentPropsWithoutRef<typeof BaseCollapsible.Trigger>
 >(({ className, ...props }, ref) => (
@@ -17,7 +17,7 @@ const CollapsibleTrigger = React.forwardRef<
 ));
 CollapsibleTrigger.displayName = 'CollapsibleTrigger';
 
-const CollapsibleContent = React.forwardRef<
+const CollapsibleContent = forwardRef<
     HTMLDivElement,
     React.ComponentPropsWithoutRef<typeof BaseCollapsible.Panel>
 >(({ className, ...props }, ref) => (

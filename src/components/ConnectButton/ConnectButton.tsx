@@ -13,21 +13,49 @@ import { ChevronDown } from 'lucide-react';
 import WalletDropdown from '@WalletDropdown';
 
 interface ConnectButtonProps {
+    /** * The visual theme for the button and modals. 
+     * @default 'light'
+     */
     theme?: 'light' | 'dark';
 
+    /** * Custom Tailwind or CSS class for the main button element. 
+     * If not passed, standard kit styling is applied.
+     */
     CN_ConnectButton?: string;
+
+    /** * Custom CSS class for the dropdown menu. 
+     * If not passed, it defaults to the standard dropdown layout.
+     */
     CN_DropdownMenu?: string;
+
+    /** * Custom CSS class for the connection modal. 
+     * This modal displays all wallet options and the QR code for mobile linking.
+     */
     CN_Modal?: string;
 
+    /** * Initial text shown when the wallet is disconnected. 
+     * @default "Connect Wallet"
+     */
     connectText?: string;
+
+    /** * Text displayed while the wallet is in the 'connecting' state. 
+     * @default "Connecting..."
+     */
     connectingText?: string;
+
+    /** * If true, fetches and displays the native SOL balance. 
+     * @default false
+     */
     showSolBalance?: boolean;
+
+    /** * If provided, displays a specific SPL token balance (e.g., USDC). 
+     * If null/undefined, only SOL or no balance is shown.
+     */
     showDefaultToken?: {
         address: string;
         symbol: string;
     };
 }
-
 export function ConnectButton(props: ConnectButtonProps) {
     const {
         CN_DropdownMenu,
@@ -40,7 +68,6 @@ export function ConnectButton(props: ConnectButtonProps) {
     } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { isConnected, isConnecting, account, connector, walletConnectUri, clearWalletConnectUri } = useConnector();
-
 
     if (isConnected && account && connector) {
         const shortAddress = `${account.slice(0, 4)}...${account.slice(-4)}`;
@@ -70,10 +97,7 @@ export function ConnectButton(props: ConnectButtonProps) {
                     <MenuPositioner sideOffset={8} align="end">
                         <MenuPopup theme={theme}>
                             <WalletDropdown
-                                CN_ConnectButton={CN_DropdownMenu}
-                                selectedAccount={account}
-                                walletIcon={walletIcon}
-                                walletName={connector.name}
+                                CN_DropdownMenu={CN_DropdownMenu}
                                 allowNetworkSwitch={true}
                                 theme={theme}
                                 showSolBalance={showSolBalance}
@@ -113,8 +137,6 @@ export function ConnectButton(props: ConnectButtonProps) {
                 theme={theme}
                 open={isModalOpen}
                 onOpenChange={onOpenChange}
-                walletConnectUri={walletConnectUri}
-                onClearWalletConnectUri={clearWalletConnectUri}
             />
 
         </div>

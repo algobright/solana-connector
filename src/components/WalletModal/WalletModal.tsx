@@ -11,13 +11,27 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@shared/Col
 import Avatar from "@shared/Avatar";
 import { clsx } from "clsx";
 
+/**
+ * Props for the WalletModal component.
+ * This modal acts as the primary interface for users to select a wallet 
+ * or scan a QR code for mobile connection.
+ */
 type WalletModalProps = {
+    /** * Custom CSS class for the modal overlay and container. 
+     * If not provided, the component uses the kit's default modal styling.
+     */
     CN_Modal?: string;
+
+    /** * The visual theme for the modal content. 
+     * @default 'light'
+     */
     theme?: 'light' | 'dark';
+
+    /** Controlled state: whether the modal is currently visible. */
     open: boolean;
+
+    /** Callback function to handle opening and closing the modal. */
     onOpenChange: (open: boolean) => void;
-    walletConnectUri: string | null;
-    onClearWalletConnectUri: () => void;
 }
 
 export function WalletModal(props: WalletModalProps) {
@@ -26,11 +40,9 @@ export function WalletModal(props: WalletModalProps) {
         theme = 'light',
         open,
         onOpenChange,
-        walletConnectUri,
-        onClearWalletConnectUri
     } = props;
 
-    const { walletStatus: { status }, isConnecting, connectorId, connectors, connectWallet, disconnectWallet } = useConnector();
+    const { walletConnectUri, clearWalletConnectUri, walletStatus: { status }, isConnecting, connectorId, connectors, connectWallet, disconnectWallet } = useConnector();
 
     const [connectingConnectorId, setConnectingConnectorId] = useState<WalletConnectorId | null>(null);
     const [isOtherWalletsOpen, setIsOtherWalletsOpen] = useState(false);
@@ -64,7 +76,7 @@ export function WalletModal(props: WalletModalProps) {
         !!walletConnectUri;
 
     function cancelConnection() {
-        onClearWalletConnectUri?.();
+        clearWalletConnectUri?.();
         setConnectingConnectorId(null);
         disconnectWallet().catch(() => { });
     }
@@ -80,7 +92,7 @@ export function WalletModal(props: WalletModalProps) {
         setConnectingConnectorId(connector.id);
         try {
             if (connector.name === 'WalletConnect') {
-                onClearWalletConnectUri?.();
+                clearWalletConnectUri?.();
             }
             await connectWallet(connector.id);
             localStorage.setItem('recentlyConnectedConnectorId', connector.id);

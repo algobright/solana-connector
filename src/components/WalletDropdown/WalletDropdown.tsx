@@ -1,29 +1,45 @@
 import { useEffect, useRef, useState } from 'react'
-import { createSolanaRpc, isAddress } from '@solana/kit';
-import { findAssociatedTokenPda, TOKEN_PROGRAM_ADDRESS } from '@solana-program/token';
-import { TOKEN_2022_PROGRAM_ADDRESS } from '@solana-program/token-2022';
+import { isAddress } from '@solana/kit';
 import styles from './WalletDropdown.module.css'
 import { motion } from 'motion/react';
 import Avatar from '@shared/Avatar';
 import { Check, ChevronLeft, Copy, Globe, LogOut, RefreshCw } from 'lucide-react';
 import Button from '@shared/Button';
-import { address, ClusterElement, DisconnectElement, lamportsToSol, useConnectorClient } from '@solana/connector';
+import { ClusterElement, DisconnectElement, useConnector, useConnectorClient } from '@solana/connector';
 import { clsx } from 'clsx';
 import { getSolBalance, getTokenBalance } from 'src/utils/fetchBalance';
 
+/**
+ * Props for the WalletDropdown component.
+ */
 interface WalletDropdownProps {
-    CN_ConnectButton?: string;
-    selectedAccount: string;
-    walletIcon?: string;
-    walletName: string;
+    /** * Custom CSS class for the dropdown menu container. 
+     * If not passed, the component uses default absolute positioning.
+     */
+    CN_DropdownMenu?: string;
+
+    /** * Visual theme for the dropdown items. 
+     * @default 'light'
+     */
     theme?: 'light' | 'dark';
 
+    /** * Enables the option to switch between Solana clusters. 
+     * @default true
+     */
     allowNetworkSwitch?: boolean;
+
+    /** * Displays the user's SOL balance inside the dropdown header. 
+     * @default true
+     */
     showSolBalance?: boolean;
+
+    /** * Configuration to display a specific SPL token balance. 
+     * If not provided, this defaults to false (hidden).
+     */
     showDefaultToken?: {
         address: string;
         symbol: string;
-    }
+    } | undefined;
 }
 
 type DropdownView = 'wallet' | 'network';
@@ -38,19 +54,17 @@ const networkColor: Record<string, string> = {
 export function WalletDropdown(props: WalletDropdownProps) {
     const client = useConnectorClient();
 
-    const { CN_ConnectButton,
-        selectedAccount,
-        walletIcon,
-        walletName,
-        theme,
-        allowNetworkSwitch,
-        showSolBalance,
+    const { CN_DropdownMenu,
+        theme = 'light',
+        allowNetworkSwitch = true,
+        showSolBalance = true,
         showDefaultToken
     } = props
 
     const [view, setView] = useState<DropdownView>('wallet');
     const [copied, setCopied] = useState(false);
 
+    const { account, connector } = useConnector();
     const fetchingSolBalance = useRef(false);
     const [isFetchingBalance, setIsFetchingBalance] = useState(false);
 
@@ -60,6 +74,9 @@ export function WalletDropdown(props: WalletDropdownProps) {
     const [solBalance, setSolBalance] = useState<number | null>(null);
     const [defaultTokenBalance, setDefaultTokenBalance] = useState<number | null>(null);
 
+    const selectedAccount = account || '';
+    const walletName = connector?.name || 'Unknown Wallet';
+    const walletIcon = connector?.icon || undefined;
     const shortAddress = `${selectedAccount.slice(0, 4)}...${selectedAccount.slice(-4)}`;
 
     async function handleCopy() {
@@ -120,7 +137,7 @@ export function WalletDropdown(props: WalletDropdownProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className={clsx(styles.WalletDropdown, CN_ConnectButton)}
+                className={clsx(styles.WalletDropdown, CN_DropdownMenu)}
                 data-theme={theme}
             >
                 {/* Header with Avatar and Address */}
@@ -261,7 +278,7 @@ export function WalletDropdown(props: WalletDropdownProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className={clsx(styles.WalletDropdown, CN_ConnectButton)}
+                className={clsx(styles.WalletDropdown, CN_DropdownMenu)}
                 data-theme={theme}
             >
                 {/* Header */}
@@ -285,7 +302,7 @@ export function WalletDropdown(props: WalletDropdownProps) {
                         const currentClusterId = (cluster as { id?: string })?.id || 'solana:mainnet';
                         return (
                             <div className={styles.networkOptions}>
-                                {clusters.map((network, index) => {
+                                {clusters.map((network) => {
                                     const isSelected = currentClusterId === network.id;
                                     return (
                                         <div

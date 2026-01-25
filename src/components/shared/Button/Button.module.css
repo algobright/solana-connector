@@ -3,6 +3,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: fit-content;
   gap: 0.5rem;
   white-space: nowrap;
   font-weight: 500;

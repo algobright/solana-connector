@@ -34,6 +34,11 @@
       "types": "./dist/WalletModal.d.ts",
       "import": "./dist/WalletModal.mjs",
       "require": "./dist/WalletModal.js"
+    },
+    "./WalletDropdown": {
+      "types": "./dist/WalletDropdown.d.ts",
+      "import": "./dist/WalletDropdown.mjs",
+      "require": "./dist/WalletDropdown.js"
     }
   },
   "scripts": {

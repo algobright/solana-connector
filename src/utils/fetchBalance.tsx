@@ -40,7 +40,11 @@ export async function getTokenBalance(
         const mintPubkey = address(mintAddress);
         const rpc = createSolanaRpc(rpcUrl);
 
-        const mintInfo = await rpc.getAccountInfo(mintPubkey).send();
+        const mintInfo = await rpc.getAccountInfo(
+            mintPubkey,
+            { encoding: "base64" }
+        ).send();
+
         const ownerProgram = mintInfo.value?.owner;
         if (!ownerProgram) {
             throw new Error('Failed to fetch mint account info');
@@ -52,12 +56,11 @@ export async function getTokenBalance(
             tokenProgram: tokenProgram
         });
         const tokenBalance = await rpc.getTokenAccountBalance(tokenPDA).send();
-
         if (tokenBalance.value) {
             balance = parseFloat(tokenBalance.value.uiAmountString);
         }
     } catch (error) {
-        console.error("Error fetching token balance:", error);
+        // console.error("Error fetching token balance:", error);
     } finally {
         return balance;
     }
