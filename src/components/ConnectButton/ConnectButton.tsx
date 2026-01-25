@@ -22,6 +22,10 @@ interface ConnectButtonProps {
     connectText?: string;
     connectingText?: string;
     showSolBalance?: boolean;
+    showDefaultToken?: {
+        address: string;
+        symbol: string;
+    };
 }
 
 export function ConnectButton(props: ConnectButtonProps) {
@@ -31,7 +35,8 @@ export function ConnectButton(props: ConnectButtonProps) {
         CN_ConnectButton,
         connectText = "Connect Wallet",
         connectingText = "Connecting...",
-        showSolBalance = false
+        showSolBalance = false,
+        showDefaultToken
     } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { isConnected, isConnecting, account, connector, walletConnectUri, clearWalletConnectUri } = useConnector();
@@ -72,6 +77,7 @@ export function ConnectButton(props: ConnectButtonProps) {
                                 allowNetworkSwitch={true}
                                 theme={theme}
                                 showSolBalance={showSolBalance}
+                                showDefaultToken={showDefaultToken}
                             />
                         </MenuPopup>
                     </MenuPositioner>

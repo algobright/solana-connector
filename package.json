@@ -44,6 +44,8 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
+    "@solana-program/token": "^0.9.0",
+    "@solana-program/token-2022": "^0.6.1",
     "@solana/connector": "^0.2.3",
     "@solana/kit": "^5.4.0",
     "@solana/web3.js": "^1.98.4",

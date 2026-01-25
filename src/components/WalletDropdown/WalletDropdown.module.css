@@ -103,6 +103,7 @@
   padding: 0.25rem;
   border-radius: 0.5rem;
   border: none;
+  cursor: pointer;
   background-color: var(--balance-fg);
 }
 .refreshButton:disabled {
