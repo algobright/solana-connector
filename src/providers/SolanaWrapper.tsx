@@ -1,5 +1,6 @@
 "use client";
 
+import { SimplifiedWalletConnectConfig } from "@solana/connector";
 import { RpcMap } from "../types";
 import { RpcProvider } from "./RpcProvider";
 import { SolanaWalletProvider } from "./SolanaWalletProvider";
@@ -27,10 +28,16 @@ type SolanaWrapperProps = {
     enableMobile?: boolean;
 
     /** * Enable WalletConnect support 
-     * @default true
+     * Enable or configure WalletConnect support for QR code and deep-link connections.
+     * * **Mobile-First Note:** Setting this to `false` (default) reduces initial bundle size. 
+     * Enable this if you need to support desktop-to-mobile connections via QR codes.
+     * * - `false`: (Default) Disables WalletConnect.
+     * - `true`: Enables using `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` from your environment.
+     * - `object`: Provides manual overrides for `projectId`, `metadata`, etc.
+     * * @default false
+     * @see https://docs.reown.com/appkit/overview
      */
-    walletConnect?: boolean;
-
+    walletConnect?: boolean | SimplifiedWalletConnectConfig;
     /** * List of default RPC endpoints mapped by network 
      * @default DEFAULT_RPCS
      */

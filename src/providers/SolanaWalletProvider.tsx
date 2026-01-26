@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
-import { AppProvider, getDefaultConfig, getDefaultMobileConfig, Wallet, WalletDisplayConfig } from '@solana/connector/react';
+import { AppProvider, getDefaultConfig, getDefaultMobileConfig, MobileWalletAdapterConfig, SimplifiedWalletConnectConfig, Wallet, WalletDisplayConfig } from '@solana/connector/react';
 import { Network } from '../types';
 import { CoinGeckoConfig, SolanaCluster } from '@solana/connector';
 import { useRpcProvider } from './RpcProvider';
@@ -16,7 +16,7 @@ type SolanaWalletProviderProps = {
     autoConnect?: boolean;
     enableMobile?: boolean;
 
-    walletConnect?: boolean;
+    walletConnect?: boolean | SimplifiedWalletConnectConfig;
     additionalWallets?: Wallet[];
     coingecko?: CoinGeckoConfig;
     walletsDisplayConfig?: WalletDisplayConfig;
@@ -29,7 +29,7 @@ export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
         appUrl,
         autoConnect = true,
         enableMobile = true,
-        walletConnect = true,
+        walletConnect = false,
         additionalWallets = [],
         coingecko,
         walletsDisplayConfig
@@ -98,20 +98,30 @@ export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
         });
     }, [appName, appOrigin, autoConnect, enableMobile, walletConnect, coingecko]);
 
-    const mobile = useMemo(
-        () =>
-            getDefaultMobileConfig({
-                appName: appName,
-                appUrl: appOrigin,
-                network: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
-            }),
-        [appName, appOrigin, activeNetwork],
-    );
+    // const mobile = useMemo(
+    //     () =>
+    //         getDefaultMobileConfig({
+    //             appName: appName,
+    //             appUrl: appOrigin,
+    //             network: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
+    //         }),
+    //     [appName, appOrigin, activeNetwork],
+    // );
+
+    // console.error(mobile.appIdentity)
+
+    const mobile: MobileWalletAdapterConfig = {
+        appIdentity: {
+            name: appName,
+            uri: appOrigin,
+            icon: appUrl ? `${appOrigin}/favicon.ico` : undefined,
+        }
+    }
 
 
     return (
-        <AppProvider connectorConfig={connectorConfig} mobile={mobile}>
+        <AppProvider connectorConfig={connectorConfig} mobile={mobile} >
             {children}
-        </AppProvider>
+        </AppProvider >
     );
 }
