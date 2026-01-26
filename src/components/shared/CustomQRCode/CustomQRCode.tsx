@@ -3,6 +3,7 @@
 import { useMemo, type ReactNode, type CSSProperties } from 'react';
 import QRCodeUtil from 'qrcode';
 import styles from './CustomQRCode.module.css';
+import Spinner from '@shared/Spinner';
 
 /**
  * Generate QR code matrix from value
@@ -297,10 +298,7 @@ function QRPlaceholder({
 
             {/* Loading spinner */}
             <div className={styles.loaderWrapper}>
-                <div
-                    className={styles.spinner}
-                    style={{ color: `${dotColor}40` }}
-                />
+                <Spinner />
                 <span className={styles.loadingText} style={{ color: `${dotColor}70` }}>
                     Generating QR code...
                 </span>
