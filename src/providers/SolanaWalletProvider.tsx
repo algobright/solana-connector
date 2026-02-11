@@ -98,25 +98,13 @@ export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
         });
     }, [appName, appOrigin, autoConnect, enableMobile, walletConnect, coingecko]);
 
-    // const mobile = useMemo(
-    //     () =>
-    //         getDefaultMobileConfig({
-    //             appName: appName,
-    //             appUrl: appOrigin,
-    //             network: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
-    //         }),
-    //     [appName, appOrigin, activeNetwork],
-    // );
-
-    // console.error(mobile.appIdentity)
-
-    const mobile: MobileWalletAdapterConfig = {
-        appIdentity: {
-            name: appName,
-            uri: appOrigin,
-            icon: appUrl ? `${appOrigin}/favicon.ico` : undefined,
-        }
-    }
+    const mobile = useMemo(() => {
+        return getDefaultMobileConfig({
+            appName: appName,
+            appUrl: appOrigin,
+            network: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
+        });
+    }, [appName, appOrigin, activeNetwork]);
 
 
     return (
