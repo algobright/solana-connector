@@ -48,6 +48,8 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@solana/kit": "^6.0.0",
+    "@solana/connector": "^0.2.0",
     "@base-ui/react": "^1.1.0",
     "clsx": "^2.1.1",
     "esbuild-css-modules-plugin": "^3.1.5",
@@ -57,17 +59,18 @@
     "react-icons": "^5.5.0"
   },
   "peerDependencies": {
-    "@solana-program/token": "^0.9.0",
-    "@solana-program/token-2022": "^0.6.1",
-    "@solana/connector": "^0.2.3",
-    "@solana/kit": "^5.4.0",
-    "@solana/web3.js": "^1.98.4",
     "react": ">=18.0.0",
+    "@solana/web3.js": "^1.0.0",
     "react-dom": ">=18.0.0"
   },
+  "peerDependenciesMeta": {
+    "@solana/web3.js": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@solana/kit": "^5.4.0",
     "@solana/connector": "^0.2.4",
-    "@solana/web3.js": "^1.98.4",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",

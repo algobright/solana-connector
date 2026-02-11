@@ -1,6 +1,5 @@
-import { findAssociatedTokenPda } from "@solana-program/token";
 import { address, ConnectorClient, lamportsToSol } from "@solana/connector";
-import { createSolanaRpc } from "@solana/kit";
+import { createSolanaRpc, getAddressEncoder, getProgramDerivedAddress } from "@solana/kit";
 
 export async function getSolBalance(
     client: ConnectorClient,
@@ -23,6 +22,9 @@ export async function getSolBalance(
         return balance;
     }
 }
+
+
+export const SPL_ASSOCIATED_TOKEN_PROGRAM_ADDRESS = address('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL')
 
 export async function getTokenBalance(
     client: ConnectorClient,
@@ -50,17 +52,21 @@ export async function getTokenBalance(
             throw new Error('Failed to fetch mint account info');
         }
         const tokenProgram = address(ownerProgram)
-        const [tokenPDA] = await findAssociatedTokenPda({
-            mint: mintPubkey,
-            owner: pubkeyAddress,
-            tokenProgram: tokenProgram
-        });
+        const [tokenPDA] = await getProgramDerivedAddress({
+            programAddress: SPL_ASSOCIATED_TOKEN_PROGRAM_ADDRESS,
+            seeds: [
+                getAddressEncoder().encode(pubkeyAddress),
+                getAddressEncoder().encode(tokenProgram),
+                getAddressEncoder().encode(mintPubkey)
+            ]
+        })
+
         const tokenBalance = await rpc.getTokenAccountBalance(tokenPDA).send();
         if (tokenBalance.value) {
             balance = parseFloat(tokenBalance.value.uiAmountString);
         }
     } catch (error) {
-        // console.error("Error fetching token balance:", error);
+        console.error("Error fetching token balance:", error);
     } finally {
         return balance;
     }
