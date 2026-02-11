@@ -22,6 +22,15 @@ type SolanaWalletProviderProps = {
     walletsDisplayConfig?: WalletDisplayConfig;
 };
 
+// Get origin synchronously on client, fallback for SSR
+const getOrigin = () => {
+    if (typeof window !== 'undefined') {
+        return window.location.origin;
+    }
+    return 'http://localhost:3000';
+};
+
+
 export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
     const {
         children,
@@ -42,7 +51,7 @@ export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
         rpcUrl, allRpcUrls
     } = useRpcProvider();
 
-    const appOrigin = appUrl || (typeof window !== 'undefined' ? window.location.origin : '');
+    const appOrigin = getOrigin();
 
     const activeNetwork: Network = useMemo(() => {
         if (allRpcUrls.devnet.includes(rpcUrl)) return 'devnet';
@@ -98,25 +107,15 @@ export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
         });
     }, [appName, appOrigin, autoConnect, enableMobile, walletConnect, coingecko]);
 
-    const mobile = useMemo(() => {
-        if (appName && appOrigin) {
-            return {
-                appIdentity: {
-                    name: appName,
-                    uri: appOrigin,
-                    icon: `${appOrigin}/favicon.ico`,
-                },
-                cluster: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
-            }
-        }
-
-        return getDefaultMobileConfig({
-            appName: appName,
-            appUrl: appOrigin,
-            network: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
-        });
-    }, [appName, appOrigin, activeNetwork]);
-
+    const mobile = useMemo(
+        () =>
+            getDefaultMobileConfig({
+                appName: appName,
+                appUrl: appOrigin,
+                network: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
+            }),
+        [],
+    );
 
     return (
         <AppProvider connectorConfig={connectorConfig} mobile={mobile} >
