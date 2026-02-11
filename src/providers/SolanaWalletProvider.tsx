@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useMemo } from 'react';
-import { AppProvider, getDefaultConfig, getDefaultMobileConfig, MobileWalletAdapterConfig, SimplifiedWalletConnectConfig, Wallet, WalletDisplayConfig } from '@solana/connector/react';
+import { AppProvider, getDefaultConfig, getDefaultMobileConfig, SimplifiedWalletConnectConfig, Wallet, WalletDisplayConfig } from '@solana/connector/react';
 import { Network } from '../types';
 import { CoinGeckoConfig, SolanaCluster } from '@solana/connector';
 import { useRpcProvider } from './RpcProvider';
@@ -99,6 +99,17 @@ export function SolanaWalletProvider(props: SolanaWalletProviderProps) {
     }, [appName, appOrigin, autoConnect, enableMobile, walletConnect, coingecko]);
 
     const mobile = useMemo(() => {
+        if (appName && appOrigin) {
+            return {
+                appIdentity: {
+                    name: appName,
+                    uri: appOrigin,
+                    icon: `${appOrigin}/favicon.ico`,
+                },
+                cluster: activeNetwork === 'localnet' ? 'devnet' : activeNetwork,
+            }
+        }
+
         return getDefaultMobileConfig({
             appName: appName,
             appUrl: appOrigin,

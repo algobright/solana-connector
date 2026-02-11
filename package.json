@@ -48,6 +48,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@solana/web3.js": "^1.0.0",
     "@solana/kit": "^6.0.0",
     "@solana/connector": "^0.2.0",
     "@base-ui/react": "^1.1.0",
@@ -60,7 +61,6 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "@solana/web3.js": "^1.0.0",
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
